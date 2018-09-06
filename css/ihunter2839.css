@@ -1,0 +1,55 @@
+.navbar {
+    height: 5vh;
+}
+
+.footer {
+    height: 5vh;
+}
+
+.headerLink {
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    font-family: 'Ubuntu', serif;
+}
+
+.headerLinkDark {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5em;
+    font-family: 'Ubuntu', 'serif';
+}
+
+.headerLink:hover {
+    color: white; 
+}
+
+
+.headerLinkDark:hover {
+    color: black;
+}
+
+.round {
+    border-radius: 1.5em;
+    border-color: transparent;
+}
+
+.daria {
+    animation: dariaAnimationDown 1s;
+    animation-fill-mode: forwards;
+}
+
+.daria:hover {
+    animation: dariaAnimationUp 1s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes dariaAnimationUp {
+    from {margin-top: 0;}
+    to {margin-top: -20vh;}
+}
+
+@keyframes dariaAnimationDown {
+    from {margin-top: -20vh;}
+    to {margin-top: 0;}
+}
