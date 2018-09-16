@@ -53,3 +53,19 @@
     from {margin-top: -20vh;}
     to {margin-top: 0;}
 }
+
+.aboutImage {
+    height: 15vh; 
+    margin: 5vh;
+    animation: aboutImage 1s;
+    animation-play-state: paused;
+}
+
+.aboutImage:hover {
+    animation-play-state: running;
+}
+
+@keyframes aboutImage {
+    from {height: 15vh;}
+    to {height: 17vh;}
+}
