@@ -21,7 +21,7 @@
 }
 
 .headerLink:hover {
-    color: white; 
+    color: white;
 }
 
 
@@ -55,7 +55,7 @@
 }
 
 .aboutImage {
-    height: 15vh; 
+    height: 15vh;
     margin: 5vh;
     animation: aboutImage 1s;
     animation-play-state: paused;
@@ -78,5 +78,27 @@
     height: 100%;
     z-index: 9999;
     background-color: white;
-    background: url('/img/loading.gif') 50% 50% no-repeat white; 
+    background: url('/img/loading.gif') 50% 50% no-repeat white;
+}
+
+.neuron {
+  animation: neuronFlash 5s;
+  animation-direction: normal;
+  animation-play-state: running;
+  animation-iteration-count: infinite;
+}
+
+@keyframes neuronFlash {
+  0% {
+    filter: hue-rotate(0deg);
+    -webkit-filter: hue-rotate(0deg);
+  }
+  50% {
+    filter: hue-rotate(180deg);
+    -webkit-filter: hue-rotate(180deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+    -webkit-filter: hue-rotate(360deg);
+  }
 }
