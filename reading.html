@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root" style="height: 100vh; width: 100vw; overflow-y: scroll">
+        </div>
+        
+        <script type="application/javascript">
+            let url = window.location.href
+                        
+            let rootDom = document.getElementById('root')
+            
+            let contentFrame = document.createElement('iframe')
+            contentFrame.style = "height: 100%; width: 100%"
+            contentFrame.src = url.split("?url=").pop()
+            rootDom.appendChild(contentFrame)
+            
+            if (url.includes('nytimes')) {
+                //new york times
+                let paywallNode = document.getElementById('gateway-content')
+                console.log(paywallNode)
+                
+                /*
+		let paywallInterval = window.setInterval(function(){
+                    console.log('calling interval function')
+                    paywallNode = contentFrame.getElementById('gateway-content')
+                    console.log(paywallNode)
+                        if (paywallNode !== null) {
+                            console.log('clearing the paywall')
+                            window.clearInterval(paywallInterval)
+
+                            paywallNode.remove()
+                            let appNode = document.getElementById('app')
+                            let middleNode = appNode.children[0]
+                            let hiddenNode = middleNode.children[0]
+                            hiddenNode.style = "overflow-y: scroll"
+                        }
+                    }, 
+                    1000)
+		*/
+                    
+            } else if (url.includes('bloomberg')) {
+                //bloomberg
+                let ps = document.getElementsByTagName('p')
+                for (let p of ps) {
+                    p.style = 'display: block'
+                }
+            }
+        </script>
+    </body>
+</html>
