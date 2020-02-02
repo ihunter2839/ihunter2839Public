@@ -4,34 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/ihunter2839.css">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
     </head>
     <body style="display: flex; margin: 0px">
         <div style="height: 100vh; padding: 0; overflow: scroll; position: relative">
-            <div style="display: flex; flex-direction: row; justify-content: space-around; position: fixed; left: 0; right: 0; top: 0; z-index: 1;">
-                <div>
-                    <a class="headerLink" href="/about.html">
-                        about
-                    </a>
-                </div>
-                <div>
-                    <a class="headerLink" href="/words.html">
-                        words
-                    </a>
-                </div>
-                <div>
-                    <a class="headerLink" href="/projects.html">
-                        projects
-                    </a>
-                </div>
-                <div>
-                    <a class="headerLink" href="/home.html">
-                        home
-                    </a>
-                </div>
+            <div style="display: flex; flex-direction: row; justify-content: space-around; position: fixed; left: 0; right: 0; top: 0; z-index: 1; height: 2rem;">                        <a class="headerLink" href="/about.html">
+                    about
+                </a>
+
+                <a class="headerLink" href="/words.html">
+                    words
+                </a>
+
+                <a class="headerLink" href="/projects.html">
+                    projects
+                </a>
+
+                <a class="headerLink" href="/home.html">
+                    home
+                </a>
             </div>
 
-            <svg width="1662" height="1125" preserveAspectRatio="xMidYMid" id="backgroundImage">
-                <image xlink:href="img/b2.png"  width="1662" height="1125" x="0" y="0"></image>
+            <svg width="1662" height="1125" preserveAspectRatio="xMidYMid">
+                <image
+                    id="backgroundImage"
+                    width="1662" height="1125" x="0" y="0"></image>
                 <a xlink:href="img/brutal.gif" target="_blank">
                     <image class="neuron" xlink:href="img/n1.png" x="40" y="3" width="46" height="126">
                     </image>
@@ -47,6 +45,32 @@
         </div>
 
         <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', (event) => {
+                let backgroundImage = document.getElementById("backgroundImage")
+                //wait until the image has loaded to trigger animation
+                backgroundImage.addEventListener("load", (event) => {
+                    const loader = document.getElementById('loader')
+                    window.setTimeout( () => {
+                        loader.addEventListener('animationend', (event) => {
+                            console.log('animation ended')
+                            loader.style.display = 'none'
+                        })
+                        loader.animate([
+                            { opacity: 1},
+                            { opacity: 0 },
+                        ], {
+                            duration: 1000,
+                            easing: "ease-out",
+                            iterations: 1,
+                            fill: "forwards",
+                        })
+                        window.setTimeout( () => {
+                            loader.style.display = 'none'
+                        }, 1000)
+                    }, 2000)
+                })
+                backgroundImage.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', 'img/b2.png')
+            })
         </script>
 
     </body>
