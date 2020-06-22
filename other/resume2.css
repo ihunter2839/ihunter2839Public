@@ -1,0 +1,143 @@
+.contact-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+}
+
+.contact-container > ul {
+	width: 100%;
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding: 0;
+}
+
+.contact-container > ul * {
+	flex: 1 1;
+	text-align: center;
+}
+
+.horizontal-separator {
+	width: 90%;
+	height: .125rem;
+	background-color: black;
+}
+
+.date-range {
+	font-style: italic;
+	font-size: 1rem;
+}
+
+.location {
+	font-style: italic;
+	font-size: 1rem;
+}
+
+h1 {
+	text-align: center;
+	margin-top: 0;
+	font-size: 2.25rem;
+}
+
+h2 {
+	margin: .75rem 0;
+	font-size: 1.7rem;
+}
+
+h3 {
+	font-size: 1.4rem;
+}
+
+h4 {
+	font-size: 1.2rem;
+}
+
+p {
+	margin-top: .4rem;
+	margin-bottom: .4rem;
+	font-size: 1.125rem;
+}
+
+a {
+	color: black;
+}
+
+.content-container {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.left-col {
+	width: 65%;
+	padding-right: .5rem;
+}
+
+.right-col {
+	padding-left: .5rem;
+	width: 35%;
+}
+
+.right-col h3 {
+	margin: 1.25rem 0 .75rem 0;
+}
+
+.title-row {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	align-items: center;
+}
+
+.title-row * {
+	flex-grow: 1;
+}
+
+.education-container h3 {
+	margin: .5rem 0;
+}
+
+.experience-list {
+	list-style: none;
+	padding: 0;
+}
+
+.experience-list h3 {
+	margin: .5rem 0;
+}
+
+.experience-list a {
+	font-size: 1.1rem;
+}
+
+.experience-list p:last-child {
+	margin-bottom: 1rem;
+}
+
+.education-description {
+	margin-bottom: 1rem;
+}
+
+.skills-container {
+	list-style: none;
+	padding: 0;
+}
+
+.skills-item h4 {
+	margin: 1rem 0;
+}
+
+.skills-item p {
+	margin-bottom: .75rem;
+}
+
+.other-container {
+	list-style: none;
+	padding: 0;
+}
+
+.other-item h4 {
+	margin: .4rem 0;
+}

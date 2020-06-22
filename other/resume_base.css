@@ -1,0 +1,35 @@
+@media print {
+	html {
+		width: 8.5in;
+		/*height: 11in;*/
+		background-color: #eaecfc;
+		padding: .5in;
+		box-sizing: border-box;
+		font-family: Calibri;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
+
+@media screen {
+	html {
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		background-color: grey;
+	}
+
+	body {
+		/*max-width: 8.5in;*/
+		width: 8.5in;
+		/*max-height: 11in;*/
+		background-color: white;
+		padding: .5in;
+		box-sizing: border-box;
+		font-family: Calibri;
+	}
+}
