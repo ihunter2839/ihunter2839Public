@@ -1,0 +1,935 @@
+<style>
+    img {
+        max-width: 100vw;
+        max-height: 50vh;
+    }
+
+    div.couplet_text {
+        padding: .5rem;
+        border: 1px solid black;
+    }
+
+    div.couplet_text:hover {
+        background-color: grey;
+    }
+
+    div.couplet_note {
+        display: none;
+    }
+
+</style>
+<script>
+
+    var sections; 
+
+    var answer_key = {
+        'k1-c1': 'a',
+        'k2-c1': 'b',
+        'k2-c2': 'b',
+        'k2-c3': 'b',
+        'k2-c4': 'b',
+        'k2-c5': 'b',
+        'k2-c6': 'b',
+        'k2-c7': 'b',
+        'k2-c10': 'b',
+        'k2-c11': 'b',
+        'k2-c12': 'b',
+        'k2-c13': 'b',
+        'k3-c1': 'b',
+        'k3-c2': 'b',
+        'k3-c3': 'b',
+        'k3-c7': 'a',
+        'k3-c8': 'a',
+        'k3-c9': 'b',
+        'k3-c13': 'b',
+        'k3-c14': 'b'
+    }
+
+    // update the content that is currently visible on the page
+    function updateContent() {
+        // get the current hash fragment
+        let href_split = window.location.href.split("#");
+        let hash;
+        if (href_split.length > 1) {
+            hash = window.location.href.split('#')[1];
+        } else {
+            hash = 'intro';
+        }
+
+        // split the hash fragment into components
+        let key, couplet;
+        [key, couplet] = hash.split("-");
+
+        sections.forEach(
+            function(currentValue) {
+                if ( currentValue.id === hash || currentValue.id === key) {
+                    currentValue.style.display = 'block';
+                } else {
+                    currentValue.style.display = 'None';
+                }
+            }
+        );
+    }
+
+    // check whether a use has selected the correct couplet
+    function checkAnswer(elem) {
+        let key, choice;
+        [key, choice] = elem.id.split("_");
+        console.log(key);
+        console.log(choice);
+
+        if (answer_key[key] === choice) {
+            elem.style.backgroundColor = 'green';
+        } else {
+            elem.style.backgroundColor = 'red';
+        }
+    }
+
+    function toggleNote(elem) {
+        // elem is the note hide / show button, not the note itself
+        let key, el;
+        [key, el] = elem.id.split("_");
+        console.log(key);
+        console.log(el);
+
+        // get the note text element
+        let note_text = document.getElementById([key,"note"].join("_"));
+        console.log(note_text);
+
+        // note is currently hidden, need to show
+        if (note_text.style.display === '') {
+            note_text.style.display = 'block';
+            elem.innerText = 'Hide notes';
+        } else {
+            console.log('setting display');
+            note_text.style.display = '';
+            elem.innerText = 'Show notes';
+        }
+    }
+
+    function toggleTOC() {
+        let toc = document.getElementById('toc');
+        let toc_button = document.getElementById('toc_button');
+
+        if (toc.style.display === 'block') {
+            toc.style.display = 'None';
+            toc_button.innerText = 'Show table of contents';
+        } else {
+            toc.style.display = 'block';
+            toc_button.innerText = 'Hide table of contents';
+        }
+    }
+
+    // add event listener to hide page content when hash fragment of url changes
+    window.addEventListener(
+        "hashchange", 
+        updateContent,
+        false
+    );
+
+    function addAnswerEventListeners() {
+        var couplets = document.querySelectorAll('.couplet_text');
+
+        couplets.forEach(
+            function(currentValue) {
+                currentValue.onclick = () => checkAnswer(currentValue);
+            }
+        );
+    }
+
+    function addNoteEventListeners() {
+        var notes = document.querySelectorAll('.couplet_note_button');
+
+        notes.forEach(
+            function(currentValue) {
+                currentValue.onclick = () => toggleNote(currentValue);
+            }
+        );
+    }
+
+    // things to do on page load
+    window.addEventListener(
+        "load",
+        function () {
+            //update the sections variable
+            sections = document.querySelectorAll('section');
+            // hide any content that shouldn't be visible at current url
+            updateContent();
+            // add onclick listeners to couplet buttons
+            addAnswerEventListeners();
+            // add onclick listeners to couplet note buttons
+            addNoteEventListeners();
+        },
+    );
+
+</script>
+<nav id="toc">
+<ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#k1-c1">Key to Major Groups of Fleshly Fungi</a>
+<ul>
+<li><a href="#k1-c1">Couplet 1</a></li>
+</ul></li>
+<li><a href="#vk">Visual Key</a></li>
+<li><a href="#k2-c1">Key to the Boletaceae</a>
+<ul>
+<li><a href="#k2-c1">Couplet 1</a></li>
+<li><a href="#k2-c2">Couplet 2</a></li>
+<li><a href="#k2-c3">Couplet 3</a></li>
+<li><a href="#k2-c4">Couplet 4</a></li>
+<li><a href="#k2-c5">Couplet 5</a></li>
+<li><a href="#k2-c6">Couplet 6</a></li>
+<li><a href="#k2-c7">Couplet 7</a></li>
+<li><a href="#k2-c10">Couplet 10</a></li>
+<li><a href="#k2-c11">Couplet 11</a></li>
+<li><a href="#k2-c12">Couplet 12</a></li>
+<li><a href="#k2-c13">Couplet 13</a></li>
+</ul></li>
+<li><a href="#k3-c1">Key to Boletus</a>
+<ul>
+<li><a href="#k3-c1">Couplet 1</a></li>
+<li><a href="#k3-c2">Couplet 2</a></li>
+<li><a href="#k3-c3">Couplet 3</a></li>
+<li><a href="#k3-c7">Couplet 7</a></li>
+<li><a href="#k3-c8">Couplet 8</a></li>
+<li><a href="#k3-c9">Couplet 9</a></li>
+<li><a href="#k3-c13">Couplet 13</a></li>
+<li><a href="#k3-c14">Couplet 14</a></li>
+</ul></li>
+</ul>
+</nav>
+<button id="toc_button" onclick="toggleTOC()">
+<p>Hide Table of Contents</p>
+</button>
+<section id="intro" href="#intro">
+<h1 id="bulbous-boletes">Bulbous Boletes</h1>
+<p>I found these two mushrooms mixed in oak and manzanita duff - I love their shades of red!</p>
+<figure>
+<img src="media/mushroom_wild.jpg" alt="Mushrooms in wild" /><figcaption aria-hidden="true">Mushrooms in wild</figcaption>
+</figure>
+<p>And here it is back at home</p>
+<figure>
+<img src="media/mushroom.JPG" alt="Mushroom on desk" /><figcaption aria-hidden="true">Mushroom on desk</figcaption>
+</figure>
+<h2 id="about-this-page">About this Page</h2>
+<p>This is a (slightly) interactive version of the keys presented in <em>Mushrooms Demystified</em> by David Arora, and page numbers in the text refer to the <strong>second edition</strong> of the book.</p>
+<p><a href="#k1-c1"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k1" href="#k1">
+<h2 id="keys-to-the-major-groups-of-fleshy-fungi-pg.-52">Keys to the Major Groups of Fleshy Fungi pg. 52</h2>
+</section>
+<section id="k1-c1" href="#k1-c1">
+<h3 id="couplet-1">Couplet 1</h3>
+<div id="k1-c1_a" class="couplet_text">
+<pre><code>Option 1 -
+    Spores produced on mother cells called basidia
+        AND
+    Fruiting body variously shaped
+    -&gt; Go to Basidiomycotina, pg. 57</code></pre>
+</div>
+<div id="k1-c1_b" class="couplet_text">
+<pre><code>Option 2 -
+    Spores produced inside mother cells called asci
+        AND
+    Fruiting body variously shaped
+    -&gt; Go to Ascomycotina, pg. 782</code></pre>
+</div>
+<button id="k1-c1_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k1-c1_note" class="couplet_note">
+<p>In the guide for Mushroom 1, we glanced over this couplet and moved directly into the visual key. Let’s do the same thing here, and move to the visual key for the <strong>Boletes</strong>.</p>
+</div>
+<p><a href="#intro"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#vk"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="vk" href="#vk">
+<h2 id="basidiomycetes-visual-key-pg.-52">Basidiomycetes Visual Key pg. 52</h2>
+<h3 id="boletes">Boletes</h3>
+<pre><code>Fruiting body with cap and stalk, fleshy (not tough or woody)
+    AND
+Underside of cap with spongy, often separable layer of tube or pores
+    AND
+Stalk more or less central
+    AND
+Usually on ground but occasionally on wood
+-&gt; Go to Boletes, pg. 488</code></pre>
+<p>The first thing that should be apparent with this mushroom is that it doesn’t have gills; instead, the underside of the cap is covered with layer of vertically arranged tubes.</p>
+<figure>
+<img src="media/tubes.JPG" alt="Bolete tubes" /><figcaption aria-hidden="true">Bolete tubes</figcaption>
+</figure>
+<p>A quick note on the usage of the word <strong>bolete</strong>.</p>
+<ul>
+<li><strong>Boletaceae</strong> is the name of the <em>familiy</em> of mushrooms that have tubes on the underside of their caps.</li>
+<li>The Boletaceae family contains a number of <em>genera</em>, one of which is named <strong><em>Boletus</em></strong></li>
+<li>The common term <em>“bolete”</em> is applicable to <strong>all the mushrooms in the family Boletaceae</strong>, not just those in the genus <em>Boletus</em></li>
+<li>Example: <em>Suillus luteus</em>, or the Slippery Jack, is not part of the genus <em>Boletus</em>, but is still commonly called a “bolete”</li>
+</ul>
+<p>With that out of the way, let’s proceed to the key for Boletes.</p>
+<p><a href="#k1-c1"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c1"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2" href="#k2">
+<h2 id="key-to-the-boletaceae-pg.-489">Key to the Boletaceae pg. 489</h2>
+</section>
+<section id="k2-c1" href="#k2-c1">
+<h3 id="couplet-1-1">Couplet 1</h3>
+<div id="k2-c1_a" class="couplet_text">
+<pre><code>Option 1 -
+    Fruiting body often appearing aborted or misshapen and often buried or partially buried in the humus
+        AND
+    Tubes at least somewhat disoriented (i.e. not necessarilly arranged vertically)
+        AND
+    Spore print unobtainable
+        AND
+    Not common
+    -&gt; Go to Gastroboletus pg. 544</code></pre>
+</div>
+<div id="k2-c1_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not as above
+        AND
+    Tubes vertically arranged
+        AND
+    Spore print usually obtainable
+        AND
+    Usually found above the ground when mature
+    -&gt; Go to Couplet 2</code></pre>
+</div>
+<button id="k2-c1_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c1_note" class="couplet_note">
+<p>The fruiting body on our mushroom is very well formed, with a substaintial and fleshy cap. Additionally, the tubes are oriented in a consistenly vertical arrangement, so option 2 seems like the best fit. Proceed to couplet 2.</p>
+</div>
+<p><a href="#vk"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c2"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c2" href="#k2-c2">
+<h3 id="couplet-2">Couplet 2</h3>
+<div id="k2-c2_a" class="couplet_text">
+<pre><code>Option 1 -
+    Cap and stalk shaggy or coarsely scaly, the scales gray to brown or black
+        AND
+    Pores whitish becoming gray or black in age
+        AND
+    Veil present when young
+        AND
+    Spore print dark brown to black
+        AND
+    Spores shiny, warty, or reticulate
+        AND
+    Found in eastern North America and Southwest
+    -&gt; Go to Strobilomyces, pg. 543</code></pre>
+</div>
+<div id="k2-c2_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not as above
+    -&gt; Go to Couplet 3</code></pre>
+</div>
+<button id="k2-c2_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c2_note" class="couplet_note">
+<p>Our mushroom doesn’t have a shaggy stalk or cap, and the pores (or tubes) are yellow to red in color. Option 2 seems like the better fit, proceed to couplet 3.</p>
+</div>
+<p><a href="#k2-c1"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c3"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c3" href="#k2-c3">
+<h3 id="couplet-3">Couplet 3</h3>
+<div id="k2-c3_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Stalk roughened by smalled tufted hairs or scales (scabers) which are usually gray to dark brown or black by maturity (but differently colored or remaining pallid in a few species)
+        AND
+    Stalk not glandular-dotted and typically not reticulare
+        AND
+    Pores rarely yellow
+    -&gt; Go to Leccinum, pg. 536</code></pre>
+</div>
+<div id="k2-c3_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not as above
+        AND
+    Stalk typically without scabers 
+    -&gt; Go to Couplet 4</code></pre>
+</div>
+<button id="k2-c3_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c3_note" class="couplet_note">
+<p>I am not familiar with what scabers look like, so let’s get a comparison of our mushroom with a typical member of <em>Leccinum</em> genus. On the left is our mystery mushroom, and on the right is <em>Leccinum aurantiacum</em>, with its distinctive black scabers.</p>
+<figure>
+<img src="media/scabers.JPG" alt="An example of scabers" /><figcaption aria-hidden="true">An example of scabers</figcaption>
+</figure>
+<p>Our mushroom doesn’t seem to have scabers, and our pores are <em>very</em> yellow, so option 2 seems to be the best choice. Proceed to couplet 4.</p>
+</div>
+<p><a href="#k2-c2"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c4"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c4" href="#k2-c4">
+<h3 id="couplet-4">Couplet 4</h3>
+<div id="k2-c4_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Bright, yellow, dry, cottony-powdery or cobwebby veil present when young, usually leaving cottony remnants on cap and / or stalk 
+        AND
+    Pores and flesh usually blueing (sometimes slowly) when bruised
+    -&gt; Go to Pulveroboletus</code></pre>
+</div>
+<div id="k2-c4_b" class="couplet_text">
+<pre><code>Option 2 -
+    Veil absent, or if present then not as above 
+    -&gt; Go to Couplet 5</code></pre>
+</div>
+<button id="k2-c4_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c4_note" class="couplet_note">
+<p>Our mushroom does not seem to have any remnants of a bright yellow, cottony veil - <em>Pulveroboletus ravenelii</em> looks something like the image below before the veil breaks.</p>
+<figure>
+<img src="media/pulveroboletus.jpg" alt="Example of Pulveroboletus" /><figcaption aria-hidden="true">Example of Pulveroboletus</figcaption>
+</figure>
+<p>Lets choose option 2 and proceed to couplet 5.</p>
+</div>
+<p><a href="#k2-c3"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c5"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c5" href="#k2-c5">
+<h3 id="couplet-5">Couplet 5</h3>
+<div id="k2-c5_a" class="couplet_text">
+<pre><code>Option 1 -
+    Veil present when young, sometimes forming a ring (annulus) on stalk, at other times clinging to the margin of cap, and in still other cases disappearing in age
+    -&gt; Go to Couplet 9</code></pre>
+</div>
+<div id="k2-c5_b" class="couplet_text">
+<pre><code>Option 2 -
+    Veil absent (check young speciments if unsure), but cap sometimes fringed with sterile tissue
+    -&gt; Go to Couplet 6</code></pre>
+</div>
+<button id="k2-c5_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c5_note" class="couplet_note">
+<p>This couplet is tricky, since I didn’t collect any young specimens that would still have an intact veil. I’ll try to make an educated guess, and if the key leads to a dead end, this will be a good place to circle back to.</p>
+<p>I don’t see any remnants of a veil on the cap or on the stipe of the mushroom. Looking closely at the margin of the cap, you can see a thin ring of tissue - this sounds similar to what is described by “fringed with sterile tissue”.</p>
+<figure>
+<img src="media/sterile_tissue.JPG" alt="An example of the sterile tissue ring?" /><figcaption aria-hidden="true">An example of the sterile tissue ring?</figcaption>
+</figure>
+<p>Let’s proceed with couplet 6.</p>
+</div>
+<p><a href="#k2-c4"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c6"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c6" href="#k2-c6">
+<h3 id="couplet-6">Couplet 6</h3>
+<div id="k2-c6_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Stalk with grandular dots or smears at least when mature (the dots often slightly resinous to the touch)
+        AND
+    Stalk usually more or less equal or at least not markedly bulbous
+        AND
+    Cap often (but not always) viscid
+        AND
+    Spore print olive to brown or dull cinnamon
+    -&gt; Go to Suillus, pg. 491</code></pre>
+</div>
+<div id="k2-c6_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Stalk not grandular dotted (or very rarely so, but then with much darker spores)
+    -&gt; Go to Couplet 7</code></pre>
+</div>
+<button id="k2-c6_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c6_note" class="couplet_note">
+<p>Our mushroom does have some markings on it stipe, but they seem more linear or reticulare and don’t feel resinous at all. Compare our mushroom on the left with <em>Suillus pungens</em> with its characteristic granular dotted stipe on the right.</p>
+<figure>
+<img src="media/stalk.JPG" alt="Stipe markings" /><figcaption aria-hidden="true">Stipe markings</figcaption>
+</figure>
+<p>I think option 2 is a better fit here - let’s proceed to couplet 7.</p>
+</div>
+<p><a href="#k2-c5"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c7"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c7" href="#k2-c7">
+<h3 id="couplet-7">Couplet 7</h3>
+<div id="k2-c7_a" class="couplet_text">
+<pre><code>Option 1 -
+    Pores often radially elongated, sinous, arranged in rows, and / or veined
+        AND
+    Taste of cap not peppery
+    -&gt; Go to Couplet 8</code></pre>
+</div>
+<div id="k2-c7_b" class="couplet_text">
+<pre><code>Option 2 -
+    Pores not as above, or if so then peppery
+    -&gt; Go to Couplet 10</code></pre>
+</div>
+<button id="k2-c7_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c7_note" class="couplet_note">
+<p>Once again, it helps to see a species with elongated pores so we can compare it to our mushroom. On the left is our mushroom, and on the right is <em>Suillus cavipes</em> with its radially elongated and radially arranged pores.</p>
+<figure>
+<img src="media/pores.JPG" alt="Suillus cavipes" /><figcaption aria-hidden="true">Suillus cavipes</figcaption>
+</figure>
+<p>I think option 2 is a better fit, so we can proceed to couplet 10.</p>
+</div>
+<p><a href="#k2-c6"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c10"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c10" href="#k2-c10">
+<h3 id="couplet-10">Couplet 10</h3>
+<div id="k2-c10_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Cap viscid to very slimy when moist
+        AND
+    Stalk grandular-dotted or if not then stalk typically white to yellow and not reticulate
+        AND
+    Associated with conifers
+    -&gt; Go to Suillus, pg. 491</code></pre>
+</div>
+<div id="k2-c10_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not with above features
+    -&gt; Go to Couplet 11</code></pre>
+</div>
+<button id="k2-c10_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c10_note" class="couplet_note">
+<p>The cap of our mushroom is certainly not viscid - even when wetted, the cap remains relatively coarse and does not become slippery. Additionally, our stipe does not have grandular dots, is not white, and shows some reticulate (netted or meshed) markings. Let’s proceed to couplet 11.</p>
+</div>
+<p><a href="#k2-c7"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c11"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c11" href="#k2-c11">
+<h3 id="couplet-2-1">Couplet 2</h3>
+<div id="k2-c11_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Spore print flesh-colored to pinkish-brown, reddish-brown, vinaceous, or chocolate-brown
+        AND
+    Pores typically white to pinkish, vinaceous, gray, or brown but not red and only rarely yellow
+        AND
+    Common in eastern North America but rather infrequent in the West
+    -&gt; Go to Tylopilus, pg. 532</code></pre>
+</div>
+<div id="k2-c11_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not as above
+        AND
+    Spore print yellow to yellow-brown, olive-brown, olive, brown, or more rarely cinnamon-brown; pores white, yellow, olive, red, orange, or sometimes gray or brown
+    -&gt; Go to Couplet 12</code></pre>
+</div>
+<button id="k2-c11_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c11_note" class="couplet_note">
+<p>Well, let’s see what our spore print looks like. If you need help with spore prints, you can find a more thorough description in the key for <a href="/fungi/id_class_1/mushroom_1/mushroom_1.html">Mushroom 1</a>.</p>
+<figure>
+<img src="media/spores.JPG" alt="Spore print" /><figcaption aria-hidden="true">Spore print</figcaption>
+</figure>
+<p>Given the yellow to olive spores and our yellow to red pores, option 2 is the natural choice. Proceed to couplet 12.</p>
+</div>
+<p><a href="#k2-c10"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c12"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c12" href="#k2-c12">
+<h3 id="couplet-12">Couplet 12</h3>
+<div id="k2-c12_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Spore print pale yellow to yellow
+        AND
+    Stalk often hollow or partially hollow at maturity (especially near base)
+        AND
+    Common in eastern North America, rare in the West
+    -&gt; Go to Gyroporus pg. 510</code></pre>
+</div>
+<div id="k2-c12_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Spore print olive-brown to olive or brown, or occasionally yellow-brown or cinnamon-brown
+        AND
+    Stalk not normally hollow
+        AND
+    Common and widespread
+    -&gt; Go to Couplet 13</code></pre>
+</div>
+<button id="k2-c12_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c12_note" class="couplet_note">
+<p>It is hard for me to say whether or spore print is yellow or olive… but what I can say for certain is the the stipe was <em>not</em> hollow at any point.</p>
+<figure>
+<img src="media/cross_stipe.JPG" alt="Cross section of stipe" /><figcaption aria-hidden="true">Cross section of stipe</figcaption>
+</figure>
+<p>Let’s proceed with couplet 13.</p>
+</div>
+<p><a href="#k2-c11"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k2-c13"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k2-c13" href="#k2-c13">
+<h3 id="couplet-13">Couplet 13</h3>
+<div id="k2-c13_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Spores ornamented with ridges, grooves, pits, etc
+        AND
+    Stalk usually relatively long (7cm or more) and slender and coarsely reticulate or conspicuously lined with jagged ridges for most of its length
+        AND
+    Pores yellow to greenish-yellow, not usually blueing when bruised
+        AND
+    Typically terrestrial
+        AND
+    Found in eastern North America and the Southwest
+    -&gt; Go to Boletellus and Austroboletus, pg. 508</code></pre>
+</div>
+<div id="k2-c13_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not with above combination of features
+        AND
+    Spores typically smooth
+        AND
+    Widespread
+    -&gt; Go to Boletus, pg. 511</code></pre>
+</div>
+<button id="k2-c13_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k2-c13_note" class="couplet_note">
+<p>I don’t have a microscope, so we will have to pass over the microscopic characteristics for now. However, our mushroom certainly blues when bruised - I used the end of a pen to bruise this cross section and let it sit for about 30 seconds.</p>
+<figure>
+<img src="media/blueing.JPG" alt="Blueing after bruising" /><figcaption aria-hidden="true">Blueing after bruising</figcaption>
+</figure>
+<p>Let’s proceed to the key for <em>Boletus</em>.</p>
+</div>
+<p><a href="#k2-c12"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c1"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3" href="#k3">
+<h2 id="key-to-boletus-pg.-512">Key to Boletus pg. 512</h2>
+</section>
+<section id="k3-c1" href="#k3-c1">
+<h3 id="couplet-1-2">Couplet 1</h3>
+<div id="k3-c1_a" class="couplet_text">
+<pre><code>Option 1 -
+    Growing on earthballs (Scleroderma species)
+        AND
+    Fruiting body small to medium-sized, usually rather soft
+        AND
+    Especially common in southern latitudes
+    -&gt; Boletus parasiticus</code></pre>
+</div>
+<div id="k3-c1_b" class="couplet_text">
+<pre><code>Option 2 -
+    Growing on ground or wood, not on earthballs
+    -&gt; Go to Couplet 2</code></pre>
+</div>
+<button id="k3-c1_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c1_note" class="couplet_note">
+<p>Our mushroom was quite clearly growing from the ground and not from an earthball - here’s a picture of one in case, like me, you’ve never seen one!</p>
+<figure>
+<img src="media/earthball.jpg" alt="Earthball" /><figcaption aria-hidden="true">Earthball</figcaption>
+</figure>
+<p>Let’s proceed to couplet 2.</p>
+</div>
+<p><a href="#k2-c13"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c2"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c2" href="#k3-c2">
+<h3 id="couplet-2-2">Couplet 2</h3>
+<div id="k3-c2_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Taste distinctly acrid (peppery) when a small piece of cap is chewed
+        AND
+    Fruiting body typically rather small, with bright yellow mycelium at base 
+    -&gt; Go to Boletus piperatus &amp; others, pg. 517</code></pre>
+</div>
+<div id="k3-c2_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Not as above (but taste may be bitter or sour)
+    -&gt; Go to Couplet 3</code></pre>
+</div>
+<button id="k3-c2_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c2_note" class="couplet_note">
+<p>The taste of the cap of our mushroom was extremely mild, without any sort of peppery or bitter tones. Additionally, there wasn’t any sort of yellow mycelium growing from the tapered tip of the stipe. Let’s proceed to couplet 3.</p>
+</div>
+<p><a href="#k3-c1"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c3"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c3" href="#k3-c3">
+<h3 id="couplet-3-1">Couplet 3</h3>
+<div id="k3-c3_a" class="couplet_text">
+<pre><code>Option 1 -
+    Growing on or near wood or in sawdust (especially coniferous)
+    -&gt; Go to Couplet 4</code></pre>
+</div>
+<div id="k3-c3_b" class="couplet_text">
+<pre><code>Option 2 -
+    Growing on ground 
+    -&gt; Go to Couplet 7</code></pre>
+</div>
+<button id="k3-c3_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c3_note" class="couplet_note">
+<p>Our mushroom was growing from the ground the duff of oak and manzanita leaves, so option 2 seems to be a better fit. Let’s proceed to couplet 7.</p>
+</div>
+<p><a href="#k3-c2"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c7"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c7" href="#k3-c7">
+<h3 id="couplet">Couplet</h3>
+<div id="k3-c7_a" class="couplet_text">
+<pre><code>Option 1 -
+    Found in western North America (Rocky Mountains, Southwest, and westward)
+    -&gt; Go to Couplet 8</code></pre>
+</div>
+<div id="k3-c7_b" class="couplet_text">
+<pre><code>Option 2 -
+    Found in eastern North America (east of the Rockies, also southern Arizona)
+    -&gt; Go to Couplet 42</code></pre>
+</div>
+<button id="k3-c7_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c7_note" class="couplet_note">
+<p>Given that this is a remote mushroom class, I suppose I <em>could</em> have been out mushrooming east of the Rockies, but given the pandemic circumstances, I promise you I didn’t. We can proceed to couplet 8.</p>
+</div>
+<p><a href="#k3-c3"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c8"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c8" href="#k3-c8">
+<h3 id="couplet-8">Couplet 8</h3>
+<div id="k3-c8_a" class="couplet_text">
+<pre><code>Option 1 -
+    Pore surface red, pink, vinaceous, or orange when fresh (but may be yellowish or dingier in age, or in one case yellow when young becoming red in age)
+        AND
+    Pore surface and flesh usually turning blue or blue-black when bruised or cut
+    -&gt; Go to Couplet 9</code></pre>
+</div>
+<div id="k3-c8_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Pore surface yellow to olive, brown, white, etc, but not red or orange
+        AND
+    Pore surface may or may not turn blue when bruised</code></pre>
+</div>
+<button id="k3-c8_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c8_note" class="couplet_note">
+<p>The pores of our mushroom definitely have an red to orange tint, so option 1 is the clear choice. Proceed to couplet 9.</p>
+</div>
+<p><a href="#k3-c7"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c9"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c9" href="#k3-c9">
+<h3 id="couplet-9">Couplet 9</h3>
+<div id="k3-c9_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Stalk distinctly reticulate (netted), at least over upper portion
+    -&gt; Go to Couplet 10</code></pre>
+</div>
+<div id="k3-c9_b" class="couplet_text">
+<pre><code>Option 2 -
+    Stalk not reticulate, or only very slightly so from decurrent tube walls
+    -&gt; Go to Couplet 13</code></pre>
+</div>
+<button id="k3-c9_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c9_note" class="couplet_note">
+<p>To get an idea of what a reticulate stalk would look like, let’s look at prime candidate - <em>Boletus satanis</em>, or Satan’s bolete (an apt name!). The mesh like pattern at the base of the stipe is highlighted.</p>
+<figure>
+<img src="media/boletus_satanis.jpg" alt="Boletus Satanis" /><figcaption aria-hidden="true">Boletus Satanis</figcaption>
+</figure>
+<p>While our mushroom seems to have some degree of reticulation on the stipe, I wouldn’t say it is <em>distinctive</em>. Let’s choose option 2 and proceed to couplet 13.</p>
+</div>
+<p><a href="#k3-c8"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c13"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c13" href="#k3-c13">
+<h3 id="couplet-13-1">Couplet 13</h3>
+<div id="k3-c13_a" class="couplet_text">
+<pre><code>Option 1 -
+    Cap intensely yellow, quite large
+        AND
+    Rare
+    -&gt; Go to Boletus orovillus, pg. 526</code></pre>
+</div>
+<div id="k3-c13_b" class="couplet_text">
+<pre><code>Option 2 -
+    Not as above
+        AND
+    Common
+    -&gt; Go to Couplet 14</code></pre>
+</div>
+<button id="k3-c13_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c13_note" class="couplet_note">
+<p>Our cap is pinkish red in color, so option 2 is a better fit. Proceed to couplet 14.</p>
+</div>
+<p><a href="#k3-c9"></p>
+<p>Back</p>
+<p></a></p>
+<p><a href="#k3-c14"></p>
+<p>Next</p>
+<p></a></p>
+</section>
+<section id="k3-c14" href="#k3-c14">
+<h3 id="couplet-11">Couplet</h3>
+<div id="k3-c14_a" class="couplet_text">
+<pre><code>Option 1 - 
+    Flesh changing to blue slowly or not at all when mushroom is cut open
+        AND
+    Cap usually areolate in age
+        AND
+    Not common
+    -&gt; Go to Boletus mendocinensis, pg. 519</code></pre>
+</div>
+<div id="k3-c14_b" class="couplet_text">
+<pre><code>Option 2 - 
+    Flesh blueing quickly when cut
+        AND
+    Cap not normally areolate
+    -&gt; Go to Boletus erythropus, pg. 526</code></pre>
+</div>
+<button id="k3-c14_note-button" class="couplet_note_button">
+<p>Show Notes</p>
+</button>
+<div id="k3-c14_note" class="couplet_note">
+<p>I wasn’t sure what areolate meant, so I had to look it up - effectively, it describes a mushroom that has more color towards its center than at its margins. I don’t feel like our mushroom exhibits this trait, and it certainly blued quickly, so option 2 seems to be our best bet. We have a species!</p>
+<h2 id="boletus-erythropus-and-others-pg.-526"><em>Boletus erythropus</em> and others pg. 526</h2>
+<h3 id="boletus-amygdalinus-now-suillellus-amygdalinus"><em>Boletus amygdalinus</em>, now <em>Suillellus amygdalinus</em></h3>
+<p>This poisonous bolete was very interesting to key out! It was such a pretty specimen with firm and fresh tissue, and the colors of the pores and stipe were quite impressive - at least, I thought so until I cut the cross section of the cap!</p>
+<figure>
+<img src="media/cross_section.JPG" alt="Cross section of cap" /><figcaption aria-hidden="true">Cross section of cap</figcaption>
+</figure>
+</div>
+<p><a href="#k3-c13"></p>
+<p>Back</p>
+<p></a></p>
+</section>
+<!-- <section id="k3-c" href="#k3-c">
+
+### Couplet 
+
+<div id="k3-c_a" class="couplet_text">
+
+
+
+</div>
+
+<div id="k3-c_b" class="couplet_text">
+
+
+
+</div>
+
+<button id="k3-c_note-button" class="couplet_note_button">
+
+Show Notes
+
+</button>
+
+<div id="k3-c_note" class="couplet_note">
+
+
+
+</div>
+
+<a href="#k3-c">
+
+Back
+
+</a>
+
+<a href="#k3-c">
+
+Next
+
+</a>
+
+</section>
+ -->
